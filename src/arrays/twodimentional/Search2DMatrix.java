@@ -39,10 +39,41 @@ public class Search2DMatrix {
 		return false;
 	}
 
+	public static void findElement(int[][] matrix, int element) {
+		int rows = matrix.length;
+		int columns = matrix[0].length;
+
+		int low = 0;
+		int high = rows * columns - 1;
+
+		while (low <= high) {
+			int mid = (high + low) / 2;
+
+			int r = mid / columns;
+			int c = mid % columns;
+
+			int data = matrix[r][c];
+
+			if (data == element) {
+				System.out.println("Element found at " + r + " , " + c);
+				return;
+			} else if (data > element) {
+				high = mid - 1;
+			} else {
+				low = mid + 1;
+			}
+		}
+		System.out.println("Element not found in matrix");
+	}
+
 	public static void main(String args[]) {
 		int[][] multi = new int[][] { { 1, 3, 5, 7 }, { 10, 11, 16, 20 }, { 23, 30, 34, 50 } };
 
 		System.out.println(searchMatrix(multi, 16));
+
+		int[][] matrix = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 10, 11, 12 } };
+
+		findElement(matrix, 12);
 
 	}
 }

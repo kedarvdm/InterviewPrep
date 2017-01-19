@@ -395,9 +395,9 @@ public class BinarySearchTree {
 	public static void childrenCount(TreeNode root) {
 		LinkedHashMap<Integer, Integer> countMap = new LinkedHashMap<>();
 		findChildrenCount(root, countMap);
-		
-		for(int key: countMap.keySet()){
-			System.out.println(key+" "+ countMap.get(key));
+
+		for (int key : countMap.keySet()) {
+			System.out.println(key + " " + countMap.get(key));
 		}
 	}
 
@@ -408,27 +408,56 @@ public class BinarySearchTree {
 		}
 
 		int count = 0;
-		if(root.left != null){
+		if (root.left != null) {
 			count = count + 1 + findChildrenCount(root.left, countMap);
 		}
-		
-		if(root.right != null){
+
+		if (root.right != null) {
 			count = count + 1 + findChildrenCount(root.right, countMap);
 		}
 		countMap.put(root.data, count);
 		return count;
 	}
 
+	public static TreeNode getParent(TreeNode root, int data) {
+
+		if (root == null) {
+			return null;
+		}
+
+		if (root.data == data) { // Special case where root is the element to be
+									// found
+			return root;
+		}
+
+		TreeNode current = root;
+		TreeNode parent = null;
+
+		while (current != null) {
+
+			if (current.data == data) {
+				return parent;
+			} else if (data < current.data) {
+				parent = current;
+				current = current.left;
+			} else {
+				parent = current;
+				current = current.right;
+			}
+		}
+		return null;
+	}
+
 	public static void main(String args[]) {
 		BinarySearchTree bst = new BinarySearchTree();
-		int nums[] = { 1, 2, 3, 4, 5, 6, 7 };	//{ 4, 5, 10, 11, 12, 14 }; 
+		int nums[] = { 1, 2, 3, 4, 5, 6, 7 }; // { 4, 5, 10, 11, 12, 14 };
 		bst.root = buildBSTFromSortedArray(nums, 0, nums.length - 1);
 
 		// System.out.println("Level order traversal");
 		// levelOrderTraversal(bst.root);
 		//
-		// System.out.println("Level order traversal by levels");
-		// levelOrderTraversalPrintByLevel(bst.root);
+		 System.out.println("Level order traversal by levels");
+		 levelOrderTraversalPrintByLevel(bst.root);
 		//
 		// System.out.println("Get count between nodes 2 and 6");
 		// System.out.println(getCountBetweenRange(bst.root, 2, 6));
@@ -436,8 +465,12 @@ public class BinarySearchTree {
 
 		// System.out.println("Find LCA 7 and 1");
 		// System.out.println(lcaNonRecursive(bst.root, 7, 1));
+
+		//childrenCount(bst.root);
 		
-		childrenCount(bst.root);
+		TreeNode parent = getParent(bst.root, 16);
+		System.out.println("Parent");
+		System.out.println(parent);
 
 	}
 }

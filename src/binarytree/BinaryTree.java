@@ -15,21 +15,28 @@ public class BinaryTree {
 		root.right = new TreeNode(12);
 		root.left.left = new TreeNode(2);
 		root.left.right = new TreeNode(9);
-		root.right.left = new TreeNode(11);
-		root.right.right = new TreeNode(15);
-		root.right.right.right = new TreeNode(17);
+//		root.right.left = new TreeNode(11);
+//		root.right.right = new TreeNode(15);
+//		root.right.right.right = new TreeNode(17);
 
 		/// System.out.println(checkIsoMorphicTree(root.left, root.right));
 
 		System.out.println("Level Order Traversal Print By Level");
 		BinarySearchTree.levelOrderTraversalPrintByLevel(root);
 		// printLongestPath(root);
-		System.out.println("Vertical Order Traversal");
-		printVerticalOrder(root);
-		
-		System.out.println("Lowest Common Ancestor");
-		TreeNode lca = lowestCommonAncestor(root, 15, 17);
-		System.out.println(lca);
+		// System.out.println("Vertical Order Traversal");
+		// printVerticalOrder(root);
+
+		 System.out.println("Lowest Common Ancestor");
+		 TreeNode lca = lowestCommonAncestor(root, 5, 12);
+		 System.out.println(lca);
+		//
+		// System.out.println("Parent");
+		// TreeNode parent = getParent(root, 9);
+		// System.out.println(parent);
+//		StringBuilder sb = new StringBuilder();
+//		boolean found = checkTargetStringNumber(root, String.valueOf(1052), sb);
+//		System.out.println(found);
 	}
 
 	public static boolean checkIsoMorphicTree(TreeNode root1, TreeNode root2) {
@@ -250,5 +257,68 @@ public class BinaryTree {
 		} else {
 			return l == null ? r : l;
 		}
+	}
+
+	public static TreeNode getParent(TreeNode root, int data) {
+
+		if (root == null) {
+			return null;
+		}
+
+		if ((root.left != null && root.left.data == data) || (root.right != null && root.right.data == data)) {
+			// current node is parent node;
+			return root;
+		}
+
+		TreeNode left = getParent(root.left, data);
+		if (left != null) {
+			return left;
+		}
+		return getParent(root.right, data);
+	}
+
+	public static TreeNode findStartNode(TreeNode root, int num) {
+		if (root != null) {
+			if (root.data == num) {
+				return root;
+			} else {
+				TreeNode left = findStartNode(root.left, num);
+				TreeNode right = findStartNode(root.right, num);
+				return (left != null) ? left : right;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public static boolean checkTargetStringNumber(TreeNode root, String number, StringBuilder sb) {
+		if (root == null) {
+			return false;
+		}
+
+		sb.append(root.data);
+
+		if (sb.toString().equals(number)) {
+			return true;
+		}
+
+		boolean leftfound = checkTargetStringNumber(root.left, number, sb);
+		if (leftfound) {
+			return leftfound;
+		} else {
+			// remove root
+			sb.delete(sb.length() - String.valueOf(root.data).length(), sb.length());
+		}
+		return checkTargetStringNumber(root.right, number, sb);
+	}
+	
+	public static boolean checkPathToTarget(TreeNode root, int num){
+		String number = String.valueOf(num);
+		int startNum = Character.getNumericValue(number.charAt(0));
+		TreeNode start = findStartNode(root, startNum);
+		
+		
+		
+		return false;
 	}
 }
