@@ -135,7 +135,7 @@ public class BinaryTree {
 
 		boolean found = traverseAndPrint(root.left, helperQueue, maxHeight, currentHeight + 1);
 		if (!found) {
-			traverseAndPrint(root.right, helperQueue, maxHeight, currentHeight + 1);
+			found = traverseAndPrint(root.right, helperQueue, maxHeight, currentHeight + 1);
 		}
 
 		if (!helperQueue.isEmpty()) {
