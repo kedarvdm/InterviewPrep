@@ -2,7 +2,7 @@ package strings;
 
 import java.util.HashSet;
 
-public class MaximumLengthPalindrome {
+public class PossibleMaximumLengthPalindrome {
 
 	public static int getPalindromeLength(String s) {
 
@@ -39,7 +39,6 @@ public class MaximumLengthPalindrome {
 	
 	public static void main(String args[]){
 		String s = "aabcbcbdcc";
-		System.out.println(getPalindromeLength("b"));
-		
+		System.out.println(getPalindromeLength(s));
 	}
 }
