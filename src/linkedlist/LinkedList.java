@@ -1,5 +1,9 @@
 package linkedlist;
 
+import java.util.NoSuchElementException;
+
+import linkedlist.LinkedList.MyIterator;
+
 public class LinkedList {
 
 	ListNode head;
@@ -74,4 +78,60 @@ public class LinkedList {
 		System.out.println();
 	}
 
+	public MyIterator getIterator() {
+		return new MyIterator();
+	}
+
+	public class MyIterator implements ListIterable {
+
+		ListNode current;
+
+		public MyIterator() {
+			current = null;
+		}
+
+		@Override
+		public boolean hasNext() {
+			if (current == null) {
+				return head != null;
+			} else {
+				return current.next != null;
+			}
+		}
+
+		@Override
+		public ListNode next() {
+
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+
+			if (current == null) {
+				current = head;
+			} else {
+				current = current.next;
+			}
+			return current;
+		}
+
+	}
+
+	public static void main(String args[]) {
+
+		LinkedList list1 = new LinkedList();
+		ListNode head1 = new ListNode(1);
+		head1.next = new ListNode(3);
+		head1.next.next = new ListNode(5);
+		head1.next.next.next = new ListNode(7);
+		head1.next.next.next.next = new ListNode(9);
+
+		list1.head = head1;
+
+		MyIterator it = list1.getIterator();
+
+		while (it.hasNext()) {
+			ListNode temp = it.next();
+			System.out.print(temp + " ");
+		}
+	}
 }

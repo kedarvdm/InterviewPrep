@@ -1,5 +1,6 @@
 package binarysearchtree;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -448,6 +449,16 @@ public class BinarySearchTree {
 		return null;
 	}
 
+	public static ArrayList<Integer> InOrder(TreeNode root) {
+		ArrayList<Integer> result = new ArrayList<>();
+		if (root != null) {
+			result.addAll(InOrder(root.left));
+			result.add(root.data);
+			result.addAll(InOrder(root.right));
+		}
+		return result;
+	}
+
 	public static void main(String args[]) {
 		BinarySearchTree bst = new BinarySearchTree();
 		int nums[] = { 1, 2, 3, 4, 5, 6, 7 }; // { 4, 5, 10, 11, 12, 14 };
@@ -456,8 +467,8 @@ public class BinarySearchTree {
 		// System.out.println("Level order traversal");
 		// levelOrderTraversal(bst.root);
 		//
-		 System.out.println("Level order traversal by levels");
-		 levelOrderTraversalPrintByLevel(bst.root);
+		System.out.println("Level order traversal by levels");
+		levelOrderTraversalPrintByLevel(bst.root);
 		//
 		// System.out.println("Get count between nodes 2 and 6");
 		// System.out.println(getCountBetweenRange(bst.root, 2, 6));
@@ -466,11 +477,17 @@ public class BinarySearchTree {
 		// System.out.println("Find LCA 7 and 1");
 		// System.out.println(lcaNonRecursive(bst.root, 7, 1));
 
-		//childrenCount(bst.root);
-		
+		// childrenCount(bst.root);
+
 		TreeNode parent = getParent(bst.root, 16);
 		System.out.println("Parent");
 		System.out.println(parent);
+
+		ArrayList<Integer> result = InOrder(bst.root);
+
+		for (int i : result) {
+			System.out.print(i + " ");
+		}
 
 	}
 }
