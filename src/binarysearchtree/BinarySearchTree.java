@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 import linkedlist.ListNode;
 
@@ -459,6 +460,92 @@ public class BinarySearchTree {
 		return result;
 	}
 
+	public static void inOrderWithoutRecursion(TreeNode root) {
+		Stack<TreeNode> nodes = new Stack<>();
+		TreeNode current = root;
+		while (!nodes.isEmpty() || current != null) {
+			if (current != null) {
+				nodes.push(current);
+				current = current.left;
+			} else {
+				TreeNode node = nodes.pop();
+				System.out.print(node.data + " ");
+				current = node.right;
+			}
+		}
+	}
+	
+	public static void inOrderWithoutRecursion1(TreeNode root) {
+		Stack<TreeNode> nodes = new Stack<>();
+		TreeNode current = root;
+		while (true) {
+			if (current != null) {
+				nodes.push(current);
+				current = current.left;
+			} else {
+				if(nodes.isEmpty()){
+					break;
+				}
+				TreeNode node = nodes.pop();
+				System.out.print(node.data + " ");
+				current = node.right;
+			}
+		}
+	}
+
+	public static void postOrderWithoutRecursion(TreeNode root) {
+
+		if (root == null) {
+			return;
+		}
+
+		Stack<TreeNode> helper = new Stack<>();
+		Stack<TreeNode> postOrder = new Stack<>();
+		helper.push(root);
+
+		while (!helper.isEmpty()) {
+			TreeNode top = helper.pop();
+			postOrder.push(top);
+
+			if (top.left != null) {
+				helper.push(top.left);
+			}
+
+			if (top.right != null) {
+				helper.push(top.right);
+			}
+		}
+
+		while (!postOrder.isEmpty()) {
+			TreeNode top = postOrder.pop();
+			System.out.print(top.data + " ");
+		}
+	}
+
+	public static void preOrderWithoutRecursion(TreeNode root) {
+
+		if (root == null) {
+			return;
+		}
+
+		Stack<TreeNode> helper = new Stack<>();
+		helper.push(root);
+
+		while (!helper.isEmpty()) {
+			TreeNode top = helper.pop();
+
+			System.out.print(top.data + " ");
+
+			if (top.right != null) {
+				helper.push(top.right);
+			}
+
+			if (top.left != null) {
+				helper.push(top.left);
+			}
+		}
+	}
+
 	public static void main(String args[]) {
 		BinarySearchTree bst = new BinarySearchTree();
 		int nums[] = { 1, 2, 3, 4, 5, 6, 7 }; // { 4, 5, 10, 11, 12, 14 };
@@ -488,6 +575,23 @@ public class BinarySearchTree {
 		for (int i : result) {
 			System.out.print(i + " ");
 		}
+		System.out.println();
+		System.out.println("Inorder Traversal");
+		inOrderTraversal(bst.root);
+		System.out.println();
+		inOrderWithoutRecursion1(bst.root);
+		System.out.println("\n**********************");
 
+		System.out.println("PostOrder Traversal");
+		postOrderTraversal(bst.root);
+		System.out.println();
+		postOrderWithoutRecursion(bst.root);
+		System.out.println("\n**********************");
+
+		System.out.println("PreOrder Traversal");
+		preOrderTraversal(bst.root);
+		System.out.println();
+		preOrderWithoutRecursion(bst.root);
+		System.out.println("\n**********************");
 	}
 }
